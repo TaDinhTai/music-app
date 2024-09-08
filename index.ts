@@ -1,7 +1,13 @@
 import express, {Express, Request, Response} from "express";
+import * as database from "./config/database";
+import dotenv from "dotenv";
+
+dotenv.config();
+
+database.connect();
 
 const app: Express = express();
-const port: number = 3000;
+const port: number | string = process.env.PORT;
 
 app.set("views", "./views");
 app.set("view engine", "pug");
