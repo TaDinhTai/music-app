@@ -30,6 +30,21 @@ if (aplayer) {
   ap.on("pause", function () {
     avatar.style.animationPlayState = "paused";
   });
+
+  ap.on("ended", function () {
+    const link = `/songs/listen/${dataSong._id}`;
+
+    const option = {
+      method: "PATCH",
+    };
+
+    fetch(link, option)
+      .then((res) => res.json())
+      .then((data) => {
+        const elementListenSpan = document.querySelector(".singer-detail .inner-listen span");;
+        elementListenSpan.innerHTML = `${data.listen} lượt nghe`;
+      });
+  });
 }
 
 // End APlayer
@@ -109,7 +124,7 @@ if (boxSearch) {
         if (songs.length > 0) {
           boxSuggest.classList.add("show");
 
-          const htmls = songs.map(song => {
+          const htmls = songs.map((song) => {
             return `
             <a class="inner-item" href="/songs/detail/${song.slug}">
               <div class="inner-image">
